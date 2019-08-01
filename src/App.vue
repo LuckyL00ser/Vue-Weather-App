@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     
-<Navbar/> 
-    <div class="container p-5">
-      <router-view/>
+    <Navbar/> 
+    <div class="container fluid px-5 py-3">     
+        <router-view/>    
     </div>
 
     <div class="alert alert-dissmissible col-md-6 col-12 mx-auto" :class="[show? ['show', 'alert-'+type ]: ''  ]"  role="alert">

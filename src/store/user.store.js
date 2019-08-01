@@ -1,3 +1,4 @@
+import axios from 'axios';
 import router from '../router';
 
 /*
@@ -15,10 +16,12 @@ const state = logged ? {
   user: readonlyUser,
   loggedIn: true,
   userCities: readonlyUser.cities,
+ 
 } : {
   user: null,
   loggedIn: false,
   userCities: [],
+
 };
 
 const mutations = {
@@ -51,8 +54,8 @@ const mutations = {
   updateWeather(state, weather) {
     for (let i = 0; i < weather.length; i++) {
       state.userCities[i].weather = weather[i].main;
-      state.userCities[i].weatherIcons=[];
-      weather[i].weather.forEach(element=>state.userCities[i].weatherIcons.push(element.icon));
+      state.userCities[i].weatherIcons = [];
+      weather[i].weather.forEach(element => state.userCities[i].weatherIcons.push(element.icon));
     }
   },
 

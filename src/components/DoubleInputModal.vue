@@ -1,5 +1,4 @@
 <template>
-
  <div class="modal " id="modal" >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
