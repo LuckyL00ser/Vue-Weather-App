@@ -50,6 +50,7 @@ export default {
 .spinner-container-visible{
     opacity: 1 !important;
     z-index: 1;
+    transition: 1s z-index step-start;
 }
 
 </style>

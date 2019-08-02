@@ -1,19 +1,24 @@
 <template>
-  <div class="position-fixed col-lg-5 card px-0 shadow-lg" :class="{'show':show}" id="charts">
-      <div class="card-title text-white p-3 bg-secondary">
-          <h4 class="d-inline-block " >{{cityName}}</h4>
-            <button class="btn d-inline-block" @click="hideCharts">
-                <i class="far fa-times-circle"></i>
-            </button>
+  <div class="col-lg-5 card px-0 shadow-lg" :class="{'show':show}" id="charts">
+      <div  class="text-white card-title bg-secondary p-3 mb-0">
+          <h4 class="my-0 align-middle pl-1" >{{cityName||'Prognoza pogody'}}</h4>            
+      </div>
+      <p v-if="!chartsData" class="my-5" id="charts-alt" >Wybierz jakieś miasto</p>
+       <div id="charts-container" :hidden="!chartsData" class="card-body text-left">
+          <h4 >Temperatura</h4>
+          <div class="canvas-container">
+              <canvas id="temperature"></canvas>
+          </div>
+          
+          <h4 >Wilgotność</h4>
+          <div class="canvas-container">
+              <canvas id="humidity"></canvas>
+          </div>
       </div>
       
-      <div class="card-body text-left">
-          <h3 >Temperatura</h3>
-          <canvas id="temperature"></canvas>
-          <span class="divider"></span>
-          <h3 >Wilgotność</h3>
-          <canvas id="humidity"></canvas>
-      </div>
+       <div class="d-block d-lg-none bg-primary" id="close-charts-btn" @click="show=!show">
+            <i class="fas fa-chevron-left"></i>
+       </div>
       <lodading-overlay :loading="fetchingChartsData"/>
   </div>
 </template>
@@ -65,7 +70,9 @@ export default {
             this.chartsData.list.forEach(element=>{
                 tempData.push(element.main.temp);
                 humData.push(element.main.humidity);
-                timestamps.push(element.main.dt_txt);
+                timestamps.push(new Date(element.dt_txt).toISOString());
+                
+               
             });
             return{
                 temperature: tempData,
@@ -74,10 +81,12 @@ export default {
             }
       },
       drawCharts(data){
+          
           if(this.tempChart && this.humChart){
               this.updateCharts(data);
               return;
-          }          
+          }
+                   
           const tempCanvas = $('#temperature');
           const humCanvas = $('#humidity');
           const preparedData = this.prepareData(data);
@@ -91,14 +100,39 @@ export default {
                         data: preparedData.temperature,
                         
                         borderColor: '#dc3545',
-                        borderWidth: 1,                        
+                        borderWidth: 2,                        
                     }]
                 },
                 options: {
+                    maintainAspectRatio:false,
+                    legend: {
+                        display:false
+                    },
                     scales: {
                         yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Temperatura [°C]'
+                            },
                             ticks: {
                                 beginAtZero: true
+                            }
+                        }],
+                        xAxes: [{
+                            type: 'time',
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Dzień'
+                            },
+                            time: {
+                                unit: 'day',
+                                unitStepSize:1,
+                                displayFormats:{
+                                    day: 'DD-MM'
+                                },
+                                tooltipFormat: 'ddd YYYY-MM-DD, kk:mm'
+                                
+                               
                             }
                         }]
                     }
@@ -110,18 +144,43 @@ export default {
                 data: {
                     labels: preparedData.labels,
                     datasets: [{
-                        label: 'Temperatura',
+                        label: 'Wilgotność',
                         data: preparedData.humidity,
                     
                         borderColor: '#007bff',
-                        borderWidth: 1,                        
+                        borderWidth: 2,                        
                     }]
                 },
-                options: {
+                 options: {
+                    maintainAspectRatio:false,
+                    legend: {
+                        display:false
+                    },
                     scales: {
                         yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Wilgotność [%]'
+                            },
                             ticks: {
                                 beginAtZero: true
+                            }
+                        }],
+                        xAxes: [{
+                            type: 'time',
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Dzień'
+                            },
+                            time: {
+                                unit: 'day',
+                                unitStepSize:1,
+                                displayFormats:{
+                                    day: 'DD-MM'
+                                },
+                                tooltipFormat: 'ddd YYYY-MM-DD, kk:mm'
+                                
+                               
                             }
                         }]
                     }
@@ -138,38 +197,92 @@ export default {
 <style scoped lang="scss">
 @import '../assets/custom.scss';
 
-#charts{
-    top: 0;
-    right:-50%;
+#charts{   
     transition: 1s right ease-in; 
     z-index:5;
+    position:relative;  
+    max-height: calc(100vh - 56px - 2rem);
+  
 }
-@include media-breakpoint-up(lg) { 
+
+@include media-breakpoint-down(md){
     #charts{
-        position:relative !important;
-        right: unset;
+        top: calc(56px + 1rem);
+        right:calc(-100% + 45px);
+        position: fixed;
+        height:calc(100vh - 56px - 2rem);
+        width:calc(100% - 10px);
+    }
+    #charts-container{
+        padding-right:2rem;
+    }
+    #charts.show{
+    right:-20px;
     }
 }
 
-#charts.show{
-    right:20px;
+@include media-breakpoint-down(sm){
+    #charts{
+        right: calc(-100% + 30px) ;
+    }
+    #close-charts-btn{
+        width:45px !important;
+        height:45px !important;
+        font-size:33px !important;
+        left:-20px !important;
+    }
+    
 }
-canvas{
-    width:300px;
-    height:300px;
-}
-.divider{
+#charts-alt{
+    position:absolute;
+    top:50%;
     width:100%;
-    height:1px;
-    background-color: lightgray;
-    border-bottom: solid 2px gray;
-    margin: 0.25rem 0;
+    text-align:center;
 }
+#charts:not(.show) #charts-container, #charts-container.hide{
+    opacity: 0;    
+}
+#charts-container{
+    display:flex;
+    justify-content: space-around;
+    flex-direction: column;
+    opacity:1;
+    transition: 1s opacity ease;
+}
+.canvas-container{ 
+    width:100%;
+    height:100%;
+}
+
+
+
 .spinner-container{
     
     border-radius: 1rem;
 }
-.spinner-container-visible{
-    z-index: 1 !important;
+
+#close-charts-btn{
+    font-size:40px;
+    color:white;
+    padding: 0;
+    width:60px;
+    height:60px;
+    position:absolute;
+    left:-30px;
+    top:calc(50% - 35px);
+    cursor:pointer;
+    border-radius: 100%;
+    border:none !important;
 }
+
+#close-charts-btn i{
+    transition-duration: 1s ;
+    margin-left:-6px;
+}
+.show #close-charts-btn i{
+    transform: rotate(180deg);
+    margin-left:6px;
+    
+}
+
 </style>

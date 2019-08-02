@@ -2,7 +2,7 @@
   <div id="app">
     
     <Navbar/> 
-    <div class="container fluid px-5 py-3">     
+    <div class="container fluid px-4 px-lg-5 py-3">     
         <router-view/>    
     </div>
 

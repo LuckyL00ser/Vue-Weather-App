@@ -52,7 +52,7 @@ const mutations = {
     state.user.cities = state.userCities;
   },
   updateWeather(state, weather) {
-    for (let i = 0; i < weather.length; i++) {
+    for (let i = 0; i < state.userCities.length; i++) {
       state.userCities[i].weather = weather[i].main;
       state.userCities[i].weatherIcons = [];
       weather[i].weather.forEach(element => state.userCities[i].weatherIcons.push(element.icon));

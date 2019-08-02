@@ -1,7 +1,7 @@
 <template>
     <div class="row position-relative ">
         
-        <div class="card col-12 col-md-6 mx-auto p-0 shadow-lg">
+        <div class="card col-12 col-lg-6 mx-auto p-0 shadow-lg mb-auto ">
             <div class="card-body p-0">
               <h4 class="card-title p-3 mb-0 bg-secondary text-white">Pogoda dla Twoich miast</h4>
               <div class="card-text p-3  position-relative ">                    
@@ -31,7 +31,7 @@
             </div>
             
           </div>
-          <weather-charts ref="weatherCharts" :fetchingChartsData="fetchingChartsData"/>
+          <weather-charts ref="weatherCharts"  :fetchingChartsData="fetchingChartsData"/>
     </div>
 </template>
 
@@ -67,7 +67,7 @@ export default {
      ...mapState('user',['userCities'])
   },
   created(){      
-      axios.get('./static/citiesIDs.json')
+      axios.get('./static/miastaPL.json')
       .then(data=>this.citiesList=data.data)
       .catch(error=>this.error('Błąd wczytywania listy miast'));
       this.fetchWeather();
@@ -126,7 +126,7 @@ export default {
                   this.currentCity=data.data;
               })
             .catch(error=>this.error(error))
-            .finally(()=>this.fetchingChartsData=false,1500);
+            .finally(()=>this.fetchingChartsData=false,1000);
       }
       
   },
@@ -161,4 +161,5 @@ export default {
     height:40px;
     float:right;
 }
+
 </style>
