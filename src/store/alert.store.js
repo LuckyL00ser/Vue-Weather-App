@@ -3,7 +3,7 @@ const state = {
   show: false,
   message: '',
   type: '',
-  timeout: 4000,
+  timeout: 5000,
 };
 const mutations = {
   removeAlert(state) {

@@ -1,7 +1,7 @@
 <template>
-    <div class="col-8 mx-auto text-left">
+    <div class="col-12 col-md-8 mx-auto text-left">
         
-        <form class="border border-secondary bg-light rounded p-3">
+        <form class="card shadow-lg bg-light rounded p-3">
             <h1>Rejestracja</h1>
         <div class="form-group">            
             <input type="text"  v-model="username" class="form-control" placeholder="Login">            
@@ -9,7 +9,9 @@
         <div class="form-group">            
             <input type="password" v-model="password"  class="form-control" placeholder="Hasło">
         </div>        
-        <button @click="register" class="btn btn-primary d-block">Zarejestruj</button>
+        <div>
+            <button @click="register" class="btn btn-primary d-block">Zarejestruj</button>
+        </div>        
         <small>Masz już konto? 
             <router-link to="/login">
                 Zaloguj się

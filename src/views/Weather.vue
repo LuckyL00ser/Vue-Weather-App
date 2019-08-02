@@ -9,15 +9,15 @@
               <div v-if="userCities.length>0">
                     <ul class="list-group mb-3">
                         <li class="list-group-item d-flex align-items-center px-1 px-sm-4 weather-of-city" v-for="city in userCities" :key="city.id" @click="loadCharts(city.id)">
-                            <span class="text-nowrap">{{city.name}}</span>
+                            <span class="text-nowrap overflow-hidden">{{city.name}}</span>
                             <div class="flex-grow-1">
-                                <img class="weather-icon" v-for="icon in city.weatherIcons" :key=icon :src="`http://openweathermap.org/img/wn/${icon}@2x.png`">
+                                <img class="weather-icon d-sm-block d-none" v-for="icon in city.weatherIcons" :key=icon :src="`http://openweathermap.org/img/wn/${icon}@2x.png`">
                             </div>  
                             <div v-if="city.weather" class="weather-container">
                                 <span>{{city.weather.temp}}&deg;C</span>  
                                 <span>{{city.weather.humidity}}%</span>  
                             </div>                
-                            <button class="btn btn-danger" @click.stop="removeCity(city)"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn btn-danger" @click.stop="deleteCity(city)"><i class="far fa-trash-alt"></i></button>
                         </li>
                     </ul>
                     <button class="btn w-100 btn-outline-danger" @click="removeAll">Usuń wszystkie</button>
@@ -55,9 +55,8 @@ export default {
         updateFrequency: 30000,
         timer: null,
         citiesList: [],
-        fetchingChartsData: false,
-        currentCity: null,
-      
+        fetchingChartsData: false,     
+        currentCity:null
     }
   },
   beforeDestroy(){
@@ -115,15 +114,19 @@ export default {
             this.fetchCurrentylAdded(city);
           }
       },
+      deleteCity(city){
+          this.currentCity=null;
+          this.$refs.weatherCharts.hideCharts();
+          this.removeCity(city);
+      },
       loadCharts(cityID){
           this.fetchingChartsData=true;
           this.$refs.weatherCharts.showCharts();
           axios.get(`http://api.openweathermap.org/data/2.5/forecast?id=${cityID}&APPID=${this.apikey}&units=metric`)
           .then(
-              data=>{
-                  
-                  this.$refs.weatherCharts.drawCharts(data.data);
-                  this.currentCity=data.data;
+              data=>{                  
+                  this.$refs.weatherCharts.drawCharts(data.data);  
+                  this.currentCity=cityID;               
               })
             .catch(error=>this.error(error))
             .finally(()=>this.fetchingChartsData=false,1000);
@@ -138,24 +141,26 @@ export default {
 <style scoped>
 
 .weather-of-city{
-    background-color:lightgray;
+    background-color: lightgray;
     cursor:pointer;
     transition:0.2s ease;
 }
 .weather-of-city:hover{
-    background-color: whitesmoke;
+    background-color:whitesmoke;
     font-size:1.1em;
     padding-top: 1rem;
     padding-bottom: 1rem;
     box-shadow: 0 0 15px gray;
 }
 .weather-container{
-    width:140px;
-    text-align: center;
+    min-width:110px;
+    text-align: right;
+    margin-right:6px;
     
 }
 .weather-container span{
-    margin-right:12px;
+    margin-left:12px;
+    white-space: nowrap;
 }
 .weather-icon{
     height:40px;

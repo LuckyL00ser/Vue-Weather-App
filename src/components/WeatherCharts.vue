@@ -3,17 +3,19 @@
       <div  class="text-white card-title bg-secondary p-3 mb-0">
           <h4 class="my-0 align-middle pl-1" >{{cityName||'Prognoza pogody'}}</h4>            
       </div>
-      <p v-if="!chartsData" class="my-5" id="charts-alt" >Wybierz jakieś miasto</p>
+      <p v-if="!chartsData" id="charts-alt" >Wybierz jakieś miasto</p>
        <div id="charts-container" :hidden="!chartsData" class="card-body text-left">
-          <h4 >Temperatura</h4>
+         
+          <h4><i class="fas fa-thermometer-half mr-2"></i>Temperatura</h4>
           <div class="canvas-container">
               <canvas id="temperature"></canvas>
           </div>
           
-          <h4 >Wilgotność</h4>
-          <div class="canvas-container">
+          <h4><i class="fas fa-tint mr-2"></i>Wilgotność</h4>
+           <div class="canvas-container">
               <canvas id="humidity"></canvas>
           </div>
+        
       </div>
       
        <div class="d-block d-lg-none bg-primary" id="close-charts-btn" @click="show=!show">
@@ -49,6 +51,14 @@ export default {
           this.show=true;
       },
       hideCharts(){
+          this.chartsData=null;
+          if(this.tempChart && this.humChart){
+            this.tempChart.destroy();
+            this.humChart.destroy();
+          }
+          this.humChart=null;
+          this.tempChart=null;          
+          this.cityName='';
           this.show=false;
       },
       updateCharts(data){
@@ -104,7 +114,7 @@ export default {
                     }]
                 },
                 options: {
-                    maintainAspectRatio:false,
+                    maintainAspectRatio: false,
                     legend: {
                         display:false
                     },
@@ -147,12 +157,13 @@ export default {
                         label: 'Wilgotność',
                         data: preparedData.humidity,
                     
-                        borderColor: '#007bff',
+                        borderColor: '#0db1ae',
                         borderWidth: 2,                        
                     }]
                 },
                  options: {
-                    maintainAspectRatio:false,
+                    
+                    maintainAspectRatio: false,
                     legend: {
                         display:false
                     },
@@ -199,10 +210,10 @@ export default {
 
 #charts{   
     transition: 1s right ease-in; 
-    z-index:5;
-    position:relative;  
-    max-height: calc(100vh - 56px - 2rem);
-  
+    z-index:5;   
+    max-height: calc(100vh - 56px - 2rem);   
+    min-height: 60vh;
+ 
 }
 
 @include media-breakpoint-down(md){
@@ -243,17 +254,24 @@ export default {
     opacity: 0;    
 }
 #charts-container{
-    display:flex;
-    justify-content: space-around;
-    flex-direction: column;
-    opacity:1;
-    transition: 1s opacity ease;
-}
-.canvas-container{ 
-    width:100%;
     height:100%;
+    opacity:1;   
+    transition: 1s opacity ease;
+    display: flex;
+    flex-direction: column;
+
+
 }
 
+.canvas-container{ 
+    height:100%;
+    width:100%;
+    flex-grow: 1;
+    min-height:100px;
+}
+canvas{
+    
+}
 
 
 .spinner-container{

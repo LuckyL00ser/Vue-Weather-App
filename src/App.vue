@@ -6,11 +6,12 @@
         <router-view/>    
     </div>
 
-    <div class="alert alert-dissmissible col-md-6 col-12 mx-auto" :class="[show? ['show', 'alert-'+type ]: ''  ]"  role="alert">
-      {{message}}
-      <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div id="alert-container" class="w-100" :class="[show? 'show': '']"  role="alert">
+      <div class="alert col-md-6 col-11 mx-auto show" :class="[show?  'alert-'+type : '']"  role="alert">
+            {{message}}
+             
+      </div>
+      
     </div>
     
   </div>
@@ -39,17 +40,16 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   
-  .alert{
+  #alert-container{
     position: fixed;
     height:60px;
-    bottom:-60px;    
-    left:20px;
-    right:20px;
-    transition: 0.2s bottom cubic-bezier(.83,1.82,.81,.75),0.2s opacity;
+    top:-60px;   
+    transition: 0.2s top cubic-bezier(.83,1.82,.81,.75),0.2s opacity;
+
     z-index:2000;
   } 
-  .alert.show{
-    bottom:20px;
+  #alert-container.show{
+    top:20px;
   }
 }
 a, a:hover{

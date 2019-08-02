@@ -1,6 +1,21 @@
+
+$theme-colors: (
+  primary: #0076ee,
+  secondary: #0db1ae,
+  danger: #df6d04,
+  
+);
+$bg-light: #eee;
+$bg-secondary: #93085c;
+
+
 @import '~bootstrap/scss/bootstrap.scss';
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins";
+
+
+
+
 
 

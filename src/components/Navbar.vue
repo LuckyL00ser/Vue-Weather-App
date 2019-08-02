@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar navbar-expand-lg bg-light justify-content-between">
+<nav class="navbar navbar-expand-lg bg-light shadow-sm justify-content-between">
         <router-link class="navbar-brand" to="/">
         <i class="fas fa-cloud-sun-rain"></i>
         WeatherApp</router-link>

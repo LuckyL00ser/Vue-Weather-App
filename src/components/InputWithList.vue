@@ -5,9 +5,9 @@
                     <li class="list-group-item list-group-item-action" v-for="suggestion in suggestedElements"  
                     :key="suggestion.id" @click="elementSelected(suggestion,false)">
                         {{suggestion.name}}
-                   <button class="btn  btn-outline-success btn-sm" @click.stop="elementSelected(suggestion,true)">
+                   <div class="text-success" @click.stop="elementSelected(suggestion,true)">
                        <i class="fas fa-plus"></i>
-                   </button>
+                   </div>
                    </li>
                 </ul>            
               </form>
@@ -83,6 +83,9 @@ button{
   padding: 0.01rem 0.45rem;
   font-size:20px !important;
   border-radius: 25% !important;
+}
+button:hover{
+  background:unset;
 }
 
 </style>
