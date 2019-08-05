@@ -104,6 +104,7 @@ export default {
                   })
               .catch(error=>this.error(error))
               .finally(()=>setTimeout(()=>this.fetching=false,1000));
+            this.loadCharts(city.id);
           
       },
       checkAndAddCity(city){

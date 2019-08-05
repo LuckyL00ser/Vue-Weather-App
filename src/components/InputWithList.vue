@@ -5,7 +5,7 @@
                     <li class="list-group-item list-group-item-action" v-for="suggestion in suggestedElements"  
                     :key="suggestion.id" @click="elementSelected(suggestion,false)">
                         {{suggestion.name}}
-                   <div class="text-success" @click.stop="elementSelected(suggestion,true)">
+                   <div class="text-success" >
                        <i class="fas fa-plus"></i>
                    </div>
                    </li>
@@ -46,6 +46,7 @@ export default {
       },    
       elementSelected(element,disableFocus){          
           this.name=element.name;
+          this.name='';
           this.$emit('elementSelected',element);         
             this.focusedInput=false;
             this.hover=disableFocus;
