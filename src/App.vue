@@ -62,15 +62,6 @@ a, a:hover{
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+
 
 </style>

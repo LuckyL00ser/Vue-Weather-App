@@ -2,13 +2,13 @@
     <div class="row position-relative ">
         
         <div class="card col-12 col-lg-6 mx-auto p-0 shadow-lg mb-auto ">
-            <div class="card-body p-0">
+            <div class="card-body bg-light p-0">
               <h4 class="card-title p-3 mb-0 bg-secondary text-white">Pogoda dla Twoich miast</h4>
               <div class="card-text p-3  position-relative ">                    
               <input-with-list :list="citiesList"  :suggestionNumber="10" inputName="Nazwa miasta" @elementSelected="checkAndAddCity"/>
               <div v-if="userCities.length>0">
                     <ul class="list-group mb-3">
-                        <li class="list-group-item d-flex align-items-center px-1 px-sm-4 weather-of-city" v-for="city in userCities" :key="city.id" @click="loadCharts(city.id)">
+                        <li class="list-group-item d-flex align-items-center px-1 px-sm-4 weather-of-city " v-for="city in userCities" :key="city.id" @click="loadCharts(city.id)">
                             <span class="text-nowrap overflow-hidden">{{city.name}}</span>
                             <div class="flex-grow-1">
                                 <img class="weather-icon d-sm-block d-none" v-for="icon in city.weatherIcons" :key=icon :src="`http://openweathermap.org/img/wn/${icon}@2x.png`">
@@ -83,7 +83,7 @@ export default {
               let citiesIDs='';
               this.userCities.forEach(city=>citiesIDs+=city.id+',');
               citiesIDs=citiesIDs.slice(0,-1);            
-              axios.get(`http://api.openweathermap.org/data/2.5/group?id=${citiesIDs}&APPID=${this.apikey}&units=metric`)
+              axios.get(`https://api.openweathermap.org/data/2.5/group?id=${citiesIDs}&APPID=${this.apikey}&units=metric`)
               .then(
                   data=>{
                       this.weatherData=data.data.list;  
@@ -96,7 +96,7 @@ export default {
       },     
       fetchCurrentylAdded(city){
           this.fetching=true;
-          axios.get(`http://api.openweathermap.org/data/2.5/weather?id=${city.id}&APPID=${this.apikey}&units=metric`)
+          axios.get(`https://api.openweathermap.org/data/2.5/weather?id=${city.id}&APPID=${this.apikey}&units=metric`)
               .then(
                   data=>{                  
                       this.weatherData.push(data.data);
@@ -122,7 +122,7 @@ export default {
       loadCharts(cityID){
           this.fetchingChartsData=true;
           this.$refs.weatherCharts.showCharts();
-          axios.get(`http://api.openweathermap.org/data/2.5/forecast?id=${cityID}&APPID=${this.apikey}&units=metric`)
+          axios.get(`https://api.openweathermap.org/data/2.5/forecast?id=${cityID}&APPID=${this.apikey}&units=metric`)
           .then(
               data=>{                  
                   this.$refs.weatherCharts.drawCharts(data.data);  
@@ -141,7 +141,7 @@ export default {
 <style scoped>
 
 .weather-of-city{
-    background-color: lightgray;
+    background-color: #E1E2E1;
     cursor:pointer;
     transition:0.2s ease;
 }
@@ -153,7 +153,7 @@ export default {
     box-shadow: 0 0 15px gray;
 }
 .weather-container{
-    min-width:110px;
+    width:120px;
     text-align: right;
     margin-right:6px;
     

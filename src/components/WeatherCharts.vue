@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-5 card px-0 shadow-lg" :class="{'show':show}" id="charts">
+  <div class="col-lg-5 card bg-light px-0 shadow-lg" :class="{'show':show}" id="charts">
       <div  class="text-white card-title bg-secondary p-3 mb-0">
           <h4 class="my-0 align-middle pl-1" >{{cityName||'Prognoza pogody'}}</h4>            
       </div>
@@ -109,7 +109,7 @@ export default {
                         label: 'Temperatura',
                         data: preparedData.temperature,
                         
-                        borderColor: '#dc3545',
+                        borderColor: '#df1e04d5',
                         borderWidth: 2,                        
                     }]
                 },
@@ -157,7 +157,7 @@ export default {
                         label: 'Wilgotność',
                         data: preparedData.humidity,
                     
-                        borderColor: '#0db1ae',
+                        borderColor: '#00bcd4',
                         borderWidth: 2,                        
                     }]
                 },
@@ -211,17 +211,17 @@ export default {
 #charts{   
     transition: 1s right ease-in; 
     z-index:5;   
-    max-height: calc(100vh - 56px - 2rem);   
+    max-height: calc(100vh - 68px - 2rem);   
     min-height: 60vh;
  
 }
 
 @include media-breakpoint-down(md){
     #charts{
-        top: calc(56px + 1rem);
+        top: calc(68px + 1rem);
         right:calc(-100% + 45px);
         position: fixed;
-        height:calc(100vh - 56px - 2rem);
+        height:calc(100vh - 68px - 2rem);
         width:calc(100% - 10px);
     }
     #charts-container{

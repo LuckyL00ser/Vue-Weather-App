@@ -18,7 +18,9 @@
             <span class="flex-grow-1 px-1 my-2"> 
               <button class="btn btn-danger w-100" @click="deleteAccountEvent"><i class="fas fa-user-slash"></i>Usuń konto</button>  
               </span>
-            
+              <span class="flex-grow-1 px-1 my-2"> 
+              <button class="btn btn-danger w-100" @click="logoutEvent"><i class="fas fa-sign-out-alt"></i>>Wyloguj</button>  
+              </span>              
             </div> 
             <double-input-modal ref="modal" :firstType="firstType" :secondType="secondType"  @accepted="actionEvent">
               <template #title>
@@ -87,6 +89,10 @@ export default {
            this.actionTitle="Usuwanie konta";
            this.firtInputTitle="Hasło";
            this.secondInputTitle="";
+      },
+      logoutEvent(){
+         this.$store.dispatch('user/logout');
+         this.$router.push('/');
       },
       changePassword(oldPassword,password){
         

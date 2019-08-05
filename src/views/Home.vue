@@ -14,12 +14,12 @@
         </div>
     </div>
     <div  class="col-12 d-flex flex-wrap" v-else>     
-          <div class="card mx-auto my-2 shadow">
+          <div class="card bg-light mx-auto my-2 shadow">
               <router-link class="my-auto" to="/weather">
               <h5 class="card-title"><i class="fas fa-cloud-sun"></i></h5>
             </router-link>
             </div>
-            <div class="card mx-auto my-2 shadow">
+            <div class="card bg-light mx-auto my-2 shadow">
              <router-link class="my-auto" to="/profile">
             <h5 class="card-title"><i class="fas fa-id-card"></i></h5>
           </router-link>

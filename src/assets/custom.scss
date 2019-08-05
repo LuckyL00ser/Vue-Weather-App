@@ -1,13 +1,15 @@
 
 $theme-colors: (
-  primary: #0076ee,
-  secondary: #0db1ae,
-  danger: #df6d04,
+  primary: #00bcd4,
+  secondary: #ffa726,
+  danger: #df1e04d5,
   
 );
-$bg-light: #eee;
-$bg-secondary: #93085c;
 
+$bg-light:#62efff;
+$bg-dark: #008ba3; 
+$bg-secondary: #ffa726;
+$text-color:  #424242;
 
 @import '~bootstrap/scss/bootstrap.scss';
 @import "node_modules/bootstrap/scss/functions";
